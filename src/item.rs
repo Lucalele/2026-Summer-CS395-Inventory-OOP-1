@@ -26,3 +26,4 @@ pub trait Item: Display + Debug {
 
     fn is_stackable(&self) -> bool;
 }
+

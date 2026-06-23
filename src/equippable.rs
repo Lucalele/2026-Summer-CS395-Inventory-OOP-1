@@ -67,7 +67,6 @@ impl Tool {
 
 impl std::fmt::Display for Tool {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-
         let (mdr, level) = self.get_modifier();
         write!(f, "  {}: {} (Lvl {})", "Mdr", mdr, level)?;
 
@@ -152,7 +151,6 @@ impl Armour {
 
 impl std::fmt::Display for Armour {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-
         Ok(())
     }
 }

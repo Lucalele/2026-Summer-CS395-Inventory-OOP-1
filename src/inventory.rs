@@ -1,4 +1,4 @@
-use std::collections::LinkedList;
+use itertools::Itertools;
 
 use crate::consumable::Consumable;
 use crate::item::Item;
@@ -129,7 +129,7 @@ pub struct Inventory {
     ///
     /// Individual item slots-- each ItemStack occupies one slot.
     ///
-    slots: LinkedList<ItemStack>,
+    slots: Vec<ItemStack>,
 
     ///
     /// Total number of distinct Item types that can be stored.
@@ -175,7 +175,7 @@ impl Inventory {
     ///
     pub fn new(desired_capacity: usize) -> Self {
         Self {
-            slots: LinkedList::new(),
+            slots: Default::default(),
             capacity: desired_capacity,
         }
     }
@@ -253,8 +253,8 @@ impl Inventory {
     ///
     /// * `to_add` - data that we want to store in a Node and add to the list
     ///
-    pub fn add_item_stack_no_check(&mut self, to_add: ItemStack) {
-        self.slots.push_back(to_add);
+     fn add_item_stack_no_check(&mut self, to_add: ItemStack) {
+        self.slots.push(to_add);
     }
 
     ///
@@ -302,7 +302,6 @@ impl std::fmt::Display for Inventory {
             self.slots
                 .iter()
                 .map(ItemStack::to_string)
-                .collect::<Vec<_>>()
                 .join("\n\n")
         )?;
 
