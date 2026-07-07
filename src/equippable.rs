@@ -1,8 +1,7 @@
 use std::fmt::{Debug, Display};
-
 use crate::item::Item;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Tool {
     name: String,
     durability: u8,
@@ -11,6 +10,33 @@ pub struct Tool {
     modifier: String,
     modifier_level: u8,
 }
+
+impl Default for Tool {
+    fn default() -> Self {
+        Self {
+            name: String::from("[Placeholder]"),
+            durability: u8::from(0),
+            speed: u8::from(0),
+            material: String::from("[Placeholder]"),
+            modifier: String::from("[Placeholder]"),
+            modifier_level: u8::from(0),
+        }
+    }
+}
+impl Item for Tool {
+    fn get_name(&self) -> &str{
+        &self.name
+    }
+    fn set_name(&mut self, nme: &str) {
+        self.name = String::from(nme);
+    }
+
+    fn is_stackable(&self) -> bool {
+        false
+    }
+    
+}
+
 
 impl Tool {
     pub fn new(
@@ -67,6 +93,10 @@ impl Tool {
 
 impl std::fmt::Display for Tool {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        writeln!(f, "  {}: {}", "Nme", self.get_name())?;
+        writeln!(f, "  {}: {}", "Dur", self.get_durability());
+        writeln!(f, "  {}: {}", "Spd", self.get_speed());
+        writeln!(f, "  {}: {}", "Mtl", self.get_material())?;
         let (mdr, level) = self.get_modifier();
         write!(f, "  {}: {} (Lvl {})", "Mdr", mdr, level)?;
 
@@ -75,7 +105,7 @@ impl std::fmt::Display for Tool {
 }
 
 //------------------------------------------------------------------------------
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Armour {
     name: String,
     durability: u8,
@@ -85,6 +115,35 @@ pub struct Armour {
     modifier_level: u8,
     element: String,
 }
+
+impl Default for Armour {
+    fn default() -> Self {
+        Self {
+            name: String::from("[Placeholder]"),
+            durability: u8::from(0),
+            defense: u8::from(0),
+            material: String::from("[Placeholder]"),
+            modifier: String::from("[Placeholder]"),
+            modifier_level: u8::from(0),
+            element: String::from("[Placeholder}"),
+        }
+    }
+}
+
+impl Item for Armour {
+    fn get_name(&self) -> &str{
+        &self.name
+    }
+    fn set_name(&mut self, nme: &str) {
+        self.name = String::from(nme);
+    }
+
+    fn is_stackable(&self) -> bool {
+        false
+    }
+    
+}
+
 
 impl Armour {
     pub fn new(
@@ -151,6 +210,15 @@ impl Armour {
 
 impl std::fmt::Display for Armour {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        writeln!(f, "  {}: {}", "Nme", self.get_name())?;
+        writeln!(f, "  {}: {}", "Dur", self.get_durability());
+        writeln!(f, "  {}: {}", "Def", self.get_defense());
+        writeln!(f, "  {}: {}", "Mtl", self.get_material())?;
+        let (mdr, level) = self.get_modifier();
+        writeln!(f, "  {}: {} (Lvl {})", "Mdr", mdr, level)?;
+        write!(f, "  {}: {}", "Emt", self.get_element())?;
+
+
         Ok(())
     }
 }
